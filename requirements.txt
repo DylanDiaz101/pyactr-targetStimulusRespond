@@ -1,0 +1,4 @@
+numpy==2.2.4
+pyactr==0.3.2
+pyparsing==3.2.3
+simpy==4.1.1
