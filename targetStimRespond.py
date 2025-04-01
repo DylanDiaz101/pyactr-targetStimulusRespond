@@ -1,12 +1,12 @@
 import pyactr as actr
 import contextlib
+import os
 
 # next goal is to include ISI
 
 # Configuration with termination signal
 letters = ["B", " ", "C", " ", "A", " ", "D", " ", "E", " ", "A", " ", "F", " ", "DONE"]
 letter_duration = 0.3
-ISI = 1.3
 screen_center = (320, 185)
 
 # Create environment
@@ -130,8 +130,18 @@ if __name__ == "__main__":
         triggers=letters,
         times=letter_duration
     )
+    # Generate a unique filename
+    base_name = 'actr_trace'
+    ext = '.txt'
+    i = 0
+    filename = f"{base_name}{ext}"
+
+    while os.path.exists(filename):
+        i += 1
+        filename = f"{base_name}_{i}{ext}"
+
     # Create output file
-    with open('actr_trace.txt', 'w') as f:
+    with open(filename, 'w') as f:
         with contextlib.redirect_stdout(f), contextlib.redirect_stderr(f):
             # Run simulation
             sim.run(letter_duration)
